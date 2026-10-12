@@ -211,6 +211,8 @@ int _write(int fd, char *buf, int size)
 #endif
 
 #include <stddef.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 /*******************************************************************************
 * Function Name  : _sbrk
@@ -229,4 +231,53 @@ void *_sbrk(ptrdiff_t incr)
 
   curbrk += incr;
   return curbrk - incr;
+}
+
+/*******************************************************************************
+* Function Name  : _close, _fstat, _isatty, _lseek, _read
+* Description    : The other system calls of the C library: stdin, stdout and
+*                  stderr are the debug UART, there is no file system. Without
+*                  them the stubs of libnosys, which always fail, are linked and
+*                  the linker warns about them whenever stdio is used. They are
+*                  weak, so the application can implement them, e.g. _read for
+*                  stdin.
+*******************************************************************************/
+__attribute__((weak, used))
+int _close(int fd)
+{
+  (void)fd;
+  return -1;
+}
+
+__attribute__((weak, used))
+int _fstat(int fd, struct stat *st)
+{
+  (void)fd;
+  st->st_mode = S_IFCHR;
+  return 0;
+}
+
+__attribute__((weak, used))
+int _isatty(int fd)
+{
+  (void)fd;
+  return 1;
+}
+
+__attribute__((weak, used))
+off_t _lseek(int fd, off_t offset, int whence)
+{
+  (void)fd;
+  (void)offset;
+  (void)whence;
+  return 0;
+}
+
+__attribute__((weak, used))
+int _read(int fd, char *buf, int size)
+{
+  (void)fd;
+  (void)buf;
+  (void)size;
+  return 0;
 }
