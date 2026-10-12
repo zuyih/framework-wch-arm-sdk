@@ -1,0 +1,7 @@
+{
+    "description": "The W.CH CH32Fxxx (Arm Cortex-M) Standard Peripheral Library and RTOS kernels",
+    "name": "framework-wch-arm-sdk",
+    "system": "all",
+    "url": "https://www.wch.cn/downloads/",
+    "version": "0.1.0"
+}
