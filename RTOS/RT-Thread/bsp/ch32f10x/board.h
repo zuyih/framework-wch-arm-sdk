@@ -18,15 +18,21 @@
 #define __BOARD_H__
 
 #include "ch32f10x.h"
+#ifndef CH32F20X_PIN_NUMBERS
 #define CH32F20X_PIN_NUMBERS   48
+#endif
 
 
 
 #define CH32_FLASH_START_ADRESS       ((uint32_t)0x08000000)
+#ifndef CH32_FLASH_SIZE
 #define CH32_FLASH_SIZE               (64 * 1024)
+#endif
 #define CH32_FLASH_END_ADDRESS        ((uint32_t)(CH32_FLASH_START_ADRESS + CH32_FLASH_SIZE))
 
+#ifndef CH32_SRAM1_SIZE
 #define CH32_SRAM1_SIZE               (20)
+#endif
 #define CH32_SRAM1_START              (0x20000000)
 #define CH32_SRAM1_END                (CH32_SRAM1_START + CH32_SRAM1_SIZE * 1024)
 
