@@ -111,6 +111,18 @@
  */
 void vPortSetupTimerInterrupt( void );
 
+/* Corresponding to startup.S. Defined before the prototypes below so the
+ * renamed handlers keep their naked attribute. */
+#ifndef vPortSVCHandler
+#define vPortSVCHandler      SVC_Handler
+#endif
+#ifndef xPortPendSVHandler
+#define xPortPendSVHandler   PendSV_Handler
+#endif
+#ifndef xPortSysTickHandler
+#define xPortSysTickHandler  SysTick_Handler
+#endif
+
 /*
  * Exception handlers.
  */
