@@ -33,7 +33,10 @@
 #include "ch32f20x_tim.h"
 #include "ch32f20x_usart.h"
 #include "ch32f20x_wwdg.h"
+/* the interrupt header file is part of the project, include it if there is one */
+#if __has_include("ch32f20x_it.h")
 #include "ch32f20x_it.h"
+#endif
 #include "ch32f20x_misc.h"
 
 

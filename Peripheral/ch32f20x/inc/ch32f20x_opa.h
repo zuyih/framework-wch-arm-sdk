@@ -17,7 +17,7 @@
  extern "C" {
 #endif
 
-#include "ch32F20x.h"
+#include "ch32f20x.h"
 
 #define OPA_PSEL_OFFSET 3
 #define OPA_NSEL_OFFSET 2

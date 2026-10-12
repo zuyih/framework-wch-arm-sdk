@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-extern unsigned int SystemCoreClock;          /* System Clock Frequency (Core Clock) */
+extern uint32_t SystemCoreClock;              /* System Clock Frequency (Core Clock) */
 
 /* CH32F10x_System_Exported_Functions */
 extern void SystemInit( void );
