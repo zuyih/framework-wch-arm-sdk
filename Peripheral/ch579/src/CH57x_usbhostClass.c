@@ -12,6 +12,7 @@
 
 #include "CH57x_common.h"
 #include "CH579UFI.H"
+#include <stdio.h>
 
 /* 设置HID上传速率 */
 __align(4) const UINT8  SetupSetHIDIdle[] = { 0x21, HID_SET_IDLE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };

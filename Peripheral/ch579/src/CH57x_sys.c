@@ -177,21 +177,56 @@ void mDelaymS( UINT16 t )
 
 
 #if( defined  DEBUG)
-int fputc( int c, FILE *f )
+/*******************************************************************************
+* Function Name  : _write
+* Description    : Support Printf Function
+* Input          : *buf: UART send Data.
+*                  size: Data length
+* Return         : size: Data length
+*******************************************************************************/
+__attribute__((used))
+int _write(int fd, char *buf, int size)
 {
+  int i;
+
+  for(i = 0; i < size; i++)
+  {
 #if  DEBUG == Debug_UART0
-  while( R8_UART0_TFC == UART_FIFO_SIZE );                        /* 等待数据发送 */
-  R8_UART0_THR = c;                                               /* 发送数据 */
-#elif DEBUG == Debug_UART1       
-  while( R8_UART1_TFC == UART_FIFO_SIZE );                        /* 等待数据发送 */
-  R8_UART1_THR = c;                                               /* 发送数据 */
-#elif DEBUG == Debug_UART2       
-  while( R8_UART2_TFC == UART_FIFO_SIZE );                        /* 等待数据发送 */
-  R8_UART2_THR = c;                                               /* 发送数据 */
-#elif DEBUG == Debug_UART3       
-  while( R8_UART3_TFC == UART_FIFO_SIZE );                        /* 等待数据发送 */
-  R8_UART3_THR = c;                                               /* 发送数据 */
+    while( R8_UART0_TFC == UART_FIFO_SIZE );
+    R8_UART0_THR = *buf++;
+#elif DEBUG == Debug_UART1
+    while( R8_UART1_TFC == UART_FIFO_SIZE );
+    R8_UART1_THR = *buf++;
+#elif DEBUG == Debug_UART2
+    while( R8_UART2_TFC == UART_FIFO_SIZE );
+    R8_UART2_THR = *buf++;
+#elif DEBUG == Debug_UART3
+    while( R8_UART3_TFC == UART_FIFO_SIZE );
+    R8_UART3_THR = *buf++;
 #endif
-  return( c );
+  }
+
+  return size;
 }
 #endif
+
+#include <stddef.h>
+
+/*******************************************************************************
+* Function Name  : _sbrk
+* Description    : Change the spatial position of data segment.
+* Return         : the old end of the heap
+*******************************************************************************/
+__attribute__((used))
+void *_sbrk(ptrdiff_t incr)
+{
+  extern char _end[];
+  extern char _heap_end[];
+  static char *curbrk = _end;
+
+  if ((curbrk + incr < _end) || (curbrk + incr > _heap_end))
+    return (void *)-1;
+
+  curbrk += incr;
+  return curbrk - incr;
+}

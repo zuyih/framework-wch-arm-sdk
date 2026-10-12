@@ -17,6 +17,16 @@
  extern "C" {
 #endif
 
+#if defined(__GNUC__)
+/* MDK-ARM keywords used by the EVT code */
+#ifndef __align
+#define __align(x)              __attribute__((aligned(x)))
+#endif
+#ifndef __nop
+#define __nop()                 __NOP()
+#endif
+#endif
+
 
 #define  NULL			0
 #define  ALL			0xFFFF
